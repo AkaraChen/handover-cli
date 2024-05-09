@@ -1,0 +1,7 @@
+pre-commit:
+    parallel: true
+    commands:
+        eslint:
+            glob: '*.{ts}'
+            run: yarn biome check {staged_files} --apply
+            stage_fixed: true
