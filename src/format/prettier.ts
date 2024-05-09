@@ -27,21 +27,14 @@ export const base: IFormatter = {
 
 function createLanguageFormatter(options: {
 	extension: string[];
-	config: (() => Promise<Config>) | Config;
+	config: Config;
 }): IFormatter {
-	let languageConfig: Config;
 	return {
 		extension: options.extension,
 		async format(file: string, config: Config) {
-			if (!languageConfig) {
-				languageConfig =
-					typeof options.config === "function"
-						? await options.config()
-						: options.config;
-			}
 			return await format(file, {
 				...config,
-				...languageConfig,
+				...options.config,
 			});
 		},
 	};
@@ -50,9 +43,6 @@ function createLanguageFormatter(options: {
 export const java = createLanguageFormatter({
 	extension: [".java"],
 	config: {
-		plugins: [
-			// @ts-expect-error
-			await import("prettier-plugin-java"),
-		],
+		plugins: ["prettier-plugin-java"],
 	},
 });
