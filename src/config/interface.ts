@@ -3,6 +3,8 @@ export enum FileType {
 	lint = 1,
 	formatter = 2,
 	lockfile = 3,
+	deployment = 4,
+	taskrunner = 5,
 }
 
 export interface File {
